@@ -1,5 +1,0 @@
-FROM pytorch/pytorch
-
-COPY . .
-
-CMD ["python", "test_gpu.py"]

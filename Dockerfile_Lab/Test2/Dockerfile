@@ -1,5 +1,0 @@
-FROM ubuntu:latest
-WORKDIR /usr
-WORKDIR src
-WORKDIR app
-CMD pwd

@@ -1,1 +1,0 @@
-print("Using Podman for Containerizing Python Applications on RHEL 8.6 on IBM Power AC922 with NVIDIA Volta GPU")
