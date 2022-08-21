@@ -1,0 +1,5 @@
+flask
+cython
+yfinance
+jupyterlab
+jupyter

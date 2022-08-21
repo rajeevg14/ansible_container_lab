@@ -1,0 +1,7 @@
+---
+- name: Setup servers for website1.example.com
+  hosts: website1
+  roles:
+    - common
+    - apache
+    - { role: website1, port: 80 }

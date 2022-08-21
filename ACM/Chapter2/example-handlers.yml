@@ -1,0 +1,27 @@
+---
+- hosts: dhcp
+  tasks:
+  - name: update to latest DHCP
+    yum
+      name: dhcp
+      state: latest
+    notify: restart dhcp
+
+  - name: copy the DHCP config
+    copy:
+      src: dhcp/dhcpd.conf
+      dest: /etc/dhcp/dhcpd.conf
+    notify: restart dhcp
+
+  - name: start DHCP at boot
+    service:
+      name: dhcpd
+      state: started
+      enabled: yes
+
+  handlers:
+  - name: restart dhcp
+    service:
+      name: dhcpd
+      state: restarted
+

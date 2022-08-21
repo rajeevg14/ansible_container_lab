@@ -1,0 +1,7 @@
+---
+- hosts: website1
+  roles:
+    - common
+    - { role: apache, tags: ["patch"] }
+    - { role: website2, tags: ["deploy", "patch"] }
+

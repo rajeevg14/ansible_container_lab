@@ -1,0 +1,10 @@
+---
+- name: Configure NRPE for the right architecture
+  hosts: ansibletest
+  user: root
+  tasks:
+    - name: Copy in the correct NRPE config file
+      copy:
+        src: “files/nrpe.{{ ansible_architecture }}.conf”
+        dest: “/etc/nagios/nrpe.cfg”
+

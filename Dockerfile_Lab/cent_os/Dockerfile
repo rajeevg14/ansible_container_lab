@@ -1,0 +1,3 @@
+FROM centos:7
+COPY TESTFILE /
+CMD cat /TESTFILE

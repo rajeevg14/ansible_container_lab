@@ -1,0 +1,13 @@
+- hosts: all
+  tasks:
+   - name: Secure config files
+     file:
+       path: “/etc/{{ item }}”
+       mode: 0600
+       owner: root
+       group: root
+     with_items:
+      - my.cnf
+      - shadow
+      - fstab
+

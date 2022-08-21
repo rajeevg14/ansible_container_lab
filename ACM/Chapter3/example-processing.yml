@@ -1,0 +1,13 @@
+---
+- name: Create user accounts
+  hosts: all
+  vars:
+    users:
+  tasks:
+    - name: Create accounts
+      user: name={{ item|lower }} state=present
+      with_items:
+        - Fred
+        - John
+        - DanielH
+

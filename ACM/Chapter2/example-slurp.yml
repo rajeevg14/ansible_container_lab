@@ -1,0 +1,28 @@
+---
+- name: Fetch a SSH key from a machine
+  hosts: bastion01
+  tasks:
+    - name: Fetch key
+      slurp:
+        src: /root/.ssh/id_rsa.pub
+      register: sshkey
+
+- name: Copy the SSH key to all hosts
+  hosts: all
+  tasks:
+    - name: Make directory for key
+      file:
+        state: directory
+        path: /root/.ssh
+        owner: root
+        group: root
+        mode: 0700
+
+    - name: Install SSH key
+      copy:
+        contents: "{{ hostvars.bastion01.sshkey|b64decode }}"
+        dest: /root/.ssh/authorized_keys
+        owner: root
+        group: root
+        mode: 0600
+

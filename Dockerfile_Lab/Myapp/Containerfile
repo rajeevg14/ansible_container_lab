@@ -1,0 +1,2 @@
+FROM ubi8/httpd-24
+COPY index.html /var/www/html/index.html

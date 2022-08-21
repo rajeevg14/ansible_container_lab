@@ -1,0 +1,44 @@
+---
+- name: Setup MySQL Infrastructure
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Start GCE Nodes
+      gce:
+        image: centos-6
+        name: "mysql-{{ item }}"
+        tags: mysql
+        zone: us-central1-a
+      with_sequence: count=2
+      register: nodes
+      when: '"mysql-{{ item }}" not in groups.all'
+
+    - name: Wait for the nodes to start
+      wait_for:
+          host: "{{ item.instance_data[0].public_ip }}"
+          port: 22
+      with_items: nodes.results
+      when: not item|skipped
+
+    - name: Register the hosts in a group
+      add_host:
+          name: "{{ item.instance_data[0].name }}"
+          ansible_ssh_host: "{{ item.instance_data[0].public_ip }}"
+          groups: "tag_mysql"
+      with_items: nodes.results
+      when: not item|skipped
+
+- name: Setup MySQL
+  hosts: tag_mysql
+  tasks:
+    - name: Install MySQL
+      yum:
+        name: mysql
+        state: present
+
+    - name: Start MySQL
+      service:
+        name: mysqld
+        state: started
+        enabled: yes
+
